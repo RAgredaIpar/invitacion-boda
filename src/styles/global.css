@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+    --font-wedding: "Cormorant", serif;
+    --font-body: "Namdhinggo", serif;
+}

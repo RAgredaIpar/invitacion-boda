@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import fondoPapel from '../assets/fondo-papel.jpg';
+import florIzquierda from '../assets/flor-tulipan.png';
+import florDerecha from '../assets/flor-tulipan.png';
+
+const fechaBoda = "2026-09-12T17:00:00";
+---
+
+<div id="rsvp-section" class="relative w-full flex flex-col items-center justify-center overflow-hidden py-16 md:py-24 px-4 bg-[#f4f1ea]">
+
+    <Image
+            src={fondoPapel}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-60"
+    />
+
+    <div class="absolute z-10 pointer-events-none
+                -left-12 bottom-0 scale-[0.5] md:scale-100 md:left-[-1] md:top-1/4 md:-translate-y-1/2 rotate-15">
+        <Image src={florIzquierda} alt="" class="w-auto h-[350px] md:h-[500px] object-contain scale-x-[-1]" />
+    </div>
+
+    <div class="absolute z-10 pointer-events-none
+                -right-12 top-15 scale-[0.7] md:scale-120 md:-right-10 md:top-80 md:-translate-y-1/2 -rotate-25">
+        <Image src={florDerecha} alt="" class="w-auto h-[350px] md:h-[500px] object-contain" />
+    </div>
+
+    <main class="relative z-20 w-full max-w-4xl mx-auto text-center text-stone-800 px-2">
+
+        <h2 class="font-wedding text-2xl md:text-3xl uppercase tracking-[0.2em] mb-12 text-[#2c2616]">
+            Solo faltan
+        </h2>
+
+        <div class="flex justify-center items-start gap-1 md:gap-4 font-body">
+            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                <div class="flex" id="container-days">
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                </div>
+                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Días</span>
+            </div>
+
+            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                <div class="flex" id="container-hours">
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                </div>
+                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Horas</span>
+            </div>
+
+            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                <div class="flex" id="container-minutes">
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                </div>
+                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Minutos</span>
+            </div>
+
+            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                <div class="flex" id="container-seconds">
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                    <div class="number-wrapper">
+                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+                    </div>
+                </div>
+                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Segundos</span>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script define:vars={{ fechaBoda }}>
+    const groups = {
+        days: document.querySelectorAll('#container-days .digit'),
+        hours: document.querySelectorAll('#container-hours .digit'),
+        minutes: document.querySelectorAll('#container-minutes .digit'),
+        seconds: document.querySelectorAll('#container-seconds .digit')
+    };
+
+    const targetDate = new Date(fechaBoda).getTime();
+
+    let isFirstLoad = true;
+    let hasInitialized = false;
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) return;
+
+        const timeStrings = {
+            days: Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(3, '0'),
+            hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0'),
+            minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0'),
+            seconds: Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0')
+        };
+
+        for (const unit in timeStrings) {
+            const digitsArray = timeStrings[unit].split('');
+
+            digitsArray.forEach((char, index) => {
+                const el = groups[unit][index];
+
+                const shouldAnimate = isFirstLoad || el.innerText !== char;
+
+                if (!shouldAnimate) return;
+
+                if (isFirstLoad) {
+                    if (!el.dataset.init) {
+                        el.innerText = char;
+
+                        el.classList.remove('odometer-init');
+                        void el.offsetWidth; // reset animation
+
+                        el.classList.add('odometer-init');
+
+                        el.dataset.init = "true";
+                    }
+
+                } else {
+                    el.classList.remove('slide-up');
+                    void el.offsetWidth;
+                    el.classList.add('slide-up');
+
+                    setTimeout(() => {
+                        el.innerText = char;
+                    }, 250);
+                }
+            });
+        }
+
+        if (!hasInitialized) {
+            hasInitialized = true;
+
+            setTimeout(() => {
+                isFirstLoad = false;
+            }, 1600);
+        }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+<style>
+    .number-wrapper {
+        height: 2.5em;
+        width: 1.5em;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (min-width: 1280px) {
+        .number-wrapper {
+            height: 5em;
+            width: 3em;
+        }
+    }
+
+    .digit {
+        display: inline-block;
+        line-height: 1;
+        will-change: transform, opacity;
+    }
+
+    .odometer-init {
+        animation: odometer 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .slide-up {
+        animation: slideUp 0.5s ease-in-out;
+    }
+
+    @keyframes odometer {
+        0% { transform: translateY(120%); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        0% { transform: translateY(0); opacity: 1; }
+        45% { transform: translateY(-120%); opacity: 0; }
+        55% { transform: translateY(120%); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+</style>
