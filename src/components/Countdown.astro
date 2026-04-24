@@ -3,94 +3,128 @@ import { Image } from 'astro:assets';
 import fondoPapel from '../assets/fondo-papel.jpg';
 import florIzquierda from '../assets/flor-tulipan.png';
 import florDerecha from '../assets/flor-tulipan.png';
+import fotoNosotros from '../assets/fondo-nosotros.jpg'
+import fotoNosotros2 from '../assets/fondo-nosotros-2.jpg';
 
 const fechaBoda = "2026-09-12T17:00:00";
 ---
 
-<div id="rsvp-section" class="relative w-full flex flex-col items-center justify-center overflow-hidden py-16 md:py-24 px-4 bg-[#f4f1ea]">
+<div id="rsvp-and-us-block" class="relative w-full overflow-hidden bg-[#f4f1ea]">
 
     <Image
             src={fondoPapel}
             alt=""
-            class="absolute inset-0 w-full h-full object-cover z-0 opacity-60"
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 pointer-events-none"
     />
 
-    <div class="absolute z-10 pointer-events-none
-                -left-12 bottom-0 scale-[0.5] md:scale-100 md:left-[-1] md:top-1/4 md:-translate-y-1/2 rotate-15">
+    <div class="absolute z-30 pointer-events-none
+                    -left-12 -top-15 md:top-60 scale-[0.5] md:scale-80 lg:scale-100 md:left-[-1] lg:top-1/4 md:-translate-y-1/2 rotate-15">
         <Image src={florIzquierda} alt="" class="w-auto h-[350px] md:h-[500px] object-contain scale-x-[-1]" />
     </div>
 
-    <div class="absolute z-10 pointer-events-none
-                -right-12 top-15 scale-[0.7] md:scale-120 md:-right-10 md:top-80 md:-translate-y-1/2 -rotate-25">
+    <div class="absolute z-30 pointer-events-none
+                    -right-15 top-26 scale-[0.8] md:scale-100 lg:scale-130 md:-right-20 lg:-right-15 md:top-105 lg:top-115 md:-translate-y-1/2 -rotate-25">
         <Image src={florDerecha} alt="" class="w-auto h-[350px] md:h-[500px] object-contain" />
     </div>
 
-    <main class="relative z-20 w-full max-w-4xl mx-auto text-center text-stone-800 px-2">
+    <div class="relative z-30 w-full flex flex-col items-center py-16 md:py-24 px-4 text-center text-stone-800">
+        <main class="w-full max-w-4xl mx-auto px-2">
+            <h2 class="font-wedding text-2xl md:text-3xl uppercase tracking-[0.2em] mb-12 text-[#2c2616]">
+                Solo faltan
+            </h2>
 
-        <h2 class="font-wedding text-2xl md:text-3xl uppercase tracking-[0.2em] mb-12 text-[#2c2616]">
-            Solo faltan
-        </h2>
-
-        <div class="flex justify-center items-start gap-1 md:gap-4 font-body">
-            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
-                <div class="flex" id="container-days">
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
+            <div class="flex justify-center items-start gap-1 md:gap-4 font-body">
+                <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                    <div class="flex" id="container-days">
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
                     </div>
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
+                    <span class="text-[10px] md:text-sm uppercase tracking-[0.2em] mt-4 text-stone-500">Días</span>
                 </div>
-                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Días</span>
+
+                <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+                <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                    <div class="flex" id="container-hours">
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                    </div>
+                    <span class="text-[10px] md:text-sm uppercase tracking-[0.2em] mt-4 text-stone-500">Horas</span>
+                </div>
+
+                <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+                <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                    <div class="flex" id="container-minutes">
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                    </div>
+                    <span class="text-[10px] md:text-sm uppercase tracking-[0.2em] mt-4 text-stone-500">Minutos</span>
+                </div>
+
+                <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+
+                <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
+                    <div class="flex" id="container-seconds">
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                        <div class="number-wrapper"><span class="digit text-5xl md:text-8xl font-light">0</span></div>
+                    </div>
+                    <span class="text-[10px] md:text-sm uppercase tracking-[0.2em] mt-4 text-stone-500">Segundos</span>
+                </div>
             </div>
+        </main>
+    </div>
 
-            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+    <section class="relative z-20 flex flex-col md:flex-row w-full h-auto md:h-[70vh] min-h-[500px] md:max-h-[800px] overflow-hidden">
 
-            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
-                <div class="flex" id="container-hours">
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                </div>
-                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Horas</span>
+        <div class="w-full md:w-2/5 h-[450px] md:h-full">
+            <Image
+                    src={fotoNosotros}
+                    alt="Jorge y Emma"
+                    class="w-full h-full object-cover object-[50%_65%]"
+            />
+        </div>
+
+        <div class="w-full md:w-3/5 bg-[#f2e1cd] flex flex-col items-center justify-center p-12 md:p-20 text-center">
+            <h3 class="font-wedding text-4xl md:text-[42px] lg:text-6xl uppercase tracking-[0.4em] text-[#2c2616] mb-10 leading-none">
+                Nosotros
+            </h3>
+
+            <div class="space-y-6 font-body text-[#2c2616] text-base md:text-2xl tracking-[0.2em] uppercase leading-loose">
+                <p class="border-b border-[#2c2616]/10 pb-4">Jorge Antonio Aqué González</p>
+                <p>Emma Rosa Chio Durán</p>
             </div>
+        </div>
+    </section>
 
-            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
+    <section class="relative z-20 flex flex-col-reverse md:flex-row w-full h-auto md:h-[70vh] min-h-[500px] md:max-h-[800px] overflow-hidden">
 
-            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
-                <div class="flex" id="container-minutes">
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                </div>
-                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Minutos</span>
-            </div>
+        <div class="w-full md:w-3/5 bg-[#f2e1cd] flex flex-col items-center justify-center p-12 md:p-20 text-center">
+            <h3 class="font-wedding text-4xl md:text-[42px] lg:text-[45px] uppercase tracking-[0.4em] text-[#2c2616] mb-10 leading-none">
+                Nuestros padres
+            </h3>
 
-            <span class="text-3xl md:text-6xl font-light leading-none pt-2 md:pt-4 text-stone-400">:</span>
-
-            <div class="flex flex-col items-center min-w-[70px] md:min-w-[120px]">
-                <div class="flex" id="container-seconds">
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                    <div class="number-wrapper">
-                        <span class="digit text-5xl md:text-8xl font-light">0</span>
-                    </div>
-                </div>
-                <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] mt-4 text-stone-500">Segundos</span>
+            <div class="space-y-3 font-body text-[#2c2616] tracking-[0.2em] leading-loose">
+                <p class="uppercase text-base md:text-2xl">José Manuel Aqué Aguilera</p>
+                <p class="uppercase text-base md:text-2xl">Zulma Gonzáles Barrios</p>
+                <p class="border-b border-[#2c2616]/10 pb-4 text-base md:text-xl">Padres del novio</p>
+                <p class="uppercase text-base md:text-2xl">José Ramón Chio Sánchez</p>
+                <p class="uppercase text-base md:text-2xl">Rosa del Carmen Durán Ruiz</p>
+                <p class="text-base md:text-xl">Padres de la novia</p>
             </div>
         </div>
 
-    </main>
+        <div class="w-full md:w-2/5 h-[450px] md:h-full">
+            <Image
+                    src={fotoNosotros2}
+                    alt="Tomada de manos"
+                    class="w-full h-full object-cover object-[50%_65%]"
+            />
+        </div>
+
+    </section>
+
 </div>
 
 <script define:vars={{ fechaBoda }}>
@@ -176,7 +210,7 @@ const fechaBoda = "2026-09-12T17:00:00";
         align-items: center;
     }
 
-    @media (min-width: 1280px) {
+    @media (min-width: 768px) {
         .number-wrapper {
             height: 5em;
             width: 3em;
