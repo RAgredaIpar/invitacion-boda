@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import fondoAgradecimiento from '../assets/fondo-detalles.jpeg';
+---
+
+<section id="agradecimiento" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20 px-6">
+
+    <Image
+            src={fondoAgradecimiento}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+    />
+
+    <div class="relative z-20 w-full flex flex-col items-center">
+
+        <div class="text-center text-[#2c2616] mb-12 drop-shadow-lg italic">
+            <h3 class="font-body text-3xl md:text-5xl tracking-[0.3em] uppercase mb-4">
+                ¡ESPERAMOS PODER VERTE AHÍ!
+            </h3>
+            <div class="space-y-2">
+                <p class="font-body text-base md:text-2xl italic opacity-90">
+                    "Por encima de todo, vístanse de amor, que es el vínculo perfecto."
+                </p>
+                <p class="font-body text-sm md:text-lg tracking-widest uppercase opacity-70">
+                    Colosenses 3:14
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full max-w-4xl bg-[#f6f0e4] p-10 md:p-16 rounded-3xl rounded-tr-[100px] shadow-2xl text-center border border-[#2c2616]/10 mx-auto">
+
+            <h4 class="font-body text-4xl md:text-5xl text-[#2c2616] mb-10 italic">
+                Confirma tu asistencia
+            </h4>
+
+            <p class="font-body text-[#2c2616]/80 text-base md:text-[22px] leading-relaxed max-w-2xl mx-auto mb-10">
+                ¡La cuenta regresiva ha comenzado! Nuestro equipo de wedding planners se comunicará contigo en los próximos días para confirmar tu asistencia, ¡nos vemos en nuestra boda!
+            </p>
+
+            <div class="w-24 md:w-120 h-[2px] bg-black/40 mx-auto"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    #agradecimiento {
+        background-color: #2c2616;
+    }
+</style>
