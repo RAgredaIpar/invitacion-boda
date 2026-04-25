@@ -3,6 +3,7 @@ import '@fontsource/namdhinggo';
 import '@fontsource/cormorant';
 import '../styles/global.css';
 import Preloader from '../components/Preloader.astro';
+import MagneticMouse from "../components/MagneticMouse.astro";
 ---
 
 <!doctype html>
@@ -14,7 +15,7 @@ import Preloader from '../components/Preloader.astro';
 </head>
 <body class="bg-[#f6f0e4]">
 <Preloader />
-<slot />
+<MagneticMouse /> <slot />
 </body>
 </html>
 

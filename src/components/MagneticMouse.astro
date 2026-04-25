@@ -1,0 +1,41 @@
+---
+---
+<div id="magnetic-cursor" class="fixed w-4 h-4 bg-[#2c2616]/10 rounded-full pointer-events-none z-[9999] opacity-0 scale-0 transition-all duration-300 ease-out backdrop-blur-[2px] border border-[#2c2616]/5"></div>
+
+<script>
+    const cursor = document.getElementById('magnetic-cursor');
+    const interactiveElements = document.querySelectorAll('a, button, .group, .interactive-target');
+
+    window.addEventListener('mousemove', (e) => {
+        if (cursor) {
+            cursor.style.transform = `translate3d(${e.clientX - 8}px, ${e.clientY - 8}px, 0) scale(${cursor.dataset.scale || 0})`;
+        }
+    });
+
+    interactiveElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+            if (cursor) {
+                cursor.style.opacity = "1";
+                cursor.dataset.scale = "4";
+                cursor.style.backgroundColor = "rgba(44, 38, 22, 0.08)";
+            }
+            (el as HTMLElement).style.transition = "transform 0.3s ease-out";
+            (el as HTMLElement).style.transform = "scale(1.05)";
+        });
+
+        el.addEventListener('mouseleave', () => {
+            if (cursor) {
+                cursor.style.opacity = "0";
+                cursor.dataset.scale = "0";
+            }
+            (el as HTMLElement).style.transform = "scale(1)";
+        });
+    });
+</script>
+
+<style is:global>
+
+    #magnetic-cursor {
+        mix-blend-mode: multiply;
+    }
+</style>
