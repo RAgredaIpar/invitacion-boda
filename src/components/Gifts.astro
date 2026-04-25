@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import fondoPapel from '../assets/fondo-papel3.jpg';
+import florDerecha from '../assets/flor-tulipan.png';
+
+import IconoRegalo from '../assets/regalo.svg';
+import LogoAmazon from '../assets/amazon.svg';
+import LogoLiverpool from '../assets/liverpool.svg';
+---
+
+<div id="gifts-section" class="relative w-full overflow-hidden bg-[#f4f1ea] max-h-screen flex items-center">
+
+    <Image
+            src={fondoPapel}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 pointer-events-none"
+    />
+
+    <div class="hidden lg:block absolute z-30 pointer-events-none
+                -right-5 top-1/2 -translate-y-1/2 scale-110 rotate-[-15deg]">
+        <Image src={florDerecha} alt="" class="w-auto h-[600px] object-contain" />
+    </div>
+
+    <div class="relative z-20 w-full max-w-[1400px] mx-auto px-6 py-20 flex flex-col lg:flex-row items-center">
+
+        <div class="w-full lg:w-[85%] flex justify-center lg:justify-start">
+            <div class="bg-[#f6f0e4] p-10 md:p-20 rounded-xl rounded-tr-[80px] md:rounded-tr-[140px] shadow-2xl border border-[#2c2616]/10 w-full max-w-5xl text-center">
+
+                <h2 class="font-wedding text-4xl md:text-6xl tracking-[0.1em] text-[#2c2616] uppercase">
+                    Mesa de regalos
+                </h2>
+
+                <div class="flex justify-center">
+                    <div class="w-32 h-32 md:w-50 md:h-50 opacity-90 transition-transform hover:scale-105 duration-700">
+                        <Image src={IconoRegalo} alt="Regalo" class="w-full h-full object-contain" />
+                    </div>
+                </div>
+
+                <p class="font-body text-[#2c2616]/80 text-base md:text-2xl tracking-[0.1em] leading-relaxed mb-10 lg:mb-16 max-w-3xl mx-auto italic">
+                    “Su presencia en este día tan especial es el mayor regalo que podemos recibir. Si desean darnos un obsequio pueden hacerlo en nuestra mesa de regalos que estará en la siguiente cuenta.”
+                </p>
+
+                <div class="flex flex-col md:flex-row items-center md:items-center justify-center gap-10 md:gap-24">
+                    <div class="flex flex-col items-center space-y-4 max-w-[250px]">
+                        <a href="https://mesaderegalos.liverpool.com.mx/eventodebusqueda" target="_blank" class="group transition-transform hover:scale-105">
+                            <div class="h-10 md:h-14 w-auto opacity-70 group-hover:opacity-100 transition-opacity">
+                                <Image src={LogoLiverpool} alt="Liverpool" class="h-full w-auto object-contain" />
+                            </div>
+                        </a>
+                        <div class="font-body font-semibold tracking-[0.1em] text-sm md:text-base leading-tight">
+                            <p class="opacity-60 uppercase text-[10px] md:text-base mb-1">Número de evento:</p>
+                            <p class="text-lg md:text-xl">51965948</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center max-w-[250px]">
+                        <a href="https://www.amazon.com.mx/wedding/guest-view/TRM2CTSYTS27" target="_blank" class="group transition-transform hover:scale-105">
+                            <div class="h-10 md:h-14 w-auto opacity-70 group-hover:opacity-100 transition-opacity">
+                                <Image src={LogoAmazon} alt="Amazon" class="h-full w-auto object-contain" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="w-50 md:w-100 h-[1px] bg-[#2c2616]/20 mx-auto my-5"></div>
+
+                <div class="space-y-2 font-body text-[#2c2616]">
+                    <p class="text-xl md:text-2xl tracking-[0.2em] font-light">
+                        4152 3139 6556 7212
+                    </p>
+
+                    <div class="space-y-1">
+                        <p class="text-base md:text-xl tracking-[0.3em] uppercase opacity-70">
+                            BBVA
+                        </p>
+                        <p class="text-base md:text-xl tracking-[0.1em]">
+                            Emma Rosa Chio Durán
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden lg:block lg:w-[15%]"></div>
+
+    </div>
+</div>
+
+<style>
+    #gifts-section {
+        min-height: 100vh;
+    }
+
+    img[src$=".svg"] {
+        filter: sepia(0.2) saturate(0.8) contrast(1.1);
+    }
+</style>
