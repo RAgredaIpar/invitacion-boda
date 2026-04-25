@@ -2,30 +2,28 @@
 import '@fontsource/namdhinggo';
 import '@fontsource/cormorant';
 import '../styles/global.css';
+import Preloader from '../components/Preloader.astro';
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Nuestra boda</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Nuestra boda</title>
+</head>
+<body class="bg-[#f6f0e4]">
+<Preloader />
+<slot />
+</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+    html, body {
+        margin: 0;
+        width: 100%;
+        overflow: hidden;
+    }
 </style>
 
 <script>
@@ -34,18 +32,25 @@ import '../styles/global.css';
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
         smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 2,
-        infinite: false,
     })
+
+    lenis.stop();
 
     function raf(time: number) {
         lenis.raf(time)
         requestAnimationFrame(raf)
     }
-
     requestAnimationFrame(raf)
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (document.body.classList.contains('preloader-done')) {
+                lenis.start();
+                observer.disconnect();
+            }
+        });
+    });
+
+    observer.observe(document.body, { attributes: true });
 </script>

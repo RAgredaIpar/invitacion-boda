@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-// Asegúrate de tener estas imágenes en tu carpeta assets
-import fondoVestimenta from '../assets/fondo-vestimenta.jpg'; // La foto de ustedes
-import iconoPrendas from '../assets/trajes.svg'; // Los dibujos de traje y vestido
+
+import fondoVestimenta from '../assets/fondo-vestimenta.jpg';
+import iconoPrendas from '../assets/trajes.svg';
 ---
 
 <section id="dress-code-section" class="relative w-full min-h-screen md:h-[80vh] flex items-center overflow-hidden">
@@ -10,7 +10,7 @@ import iconoPrendas from '../assets/trajes.svg'; // Los dibujos de traje y vesti
     <Image
             src={fondoVestimenta}
             alt="Código de vestimenta"
-            class="absolute inset-0 w-full h-full object-cover z-0 object-[22%_50%] sm:object-[25%_50%]xl:object-center"
+            class="zoom-bg absolute inset-0 w-full h-full object-cover z-0 object-[22%_50%] sm:object-[25%_50%] xl:object-center will-change-transform"
     />
 
     <div class="absolute inset-0 bg-black/30 md:bg-transparent md:bg-gradient-to-r md:from-transparent md:to-black/60 z-10"></div>
@@ -19,13 +19,13 @@ import iconoPrendas from '../assets/trajes.svg'; // Los dibujos de traje y vesti
 
         <div class="hidden md:block md:w-1/2"></div>
 
-        <div class="w-full md:w-1/2 flex flex-col items-center text-center text-white space-y-8">
+        <div class="scroll-reveal-right w-full md:w-1/2 flex flex-col items-center text-center text-white space-y-8">
 
-            <h2 class="font-wedding text-4xl md:text-6xl tracking-[0.1em] drop-shadow-md">
+            <h2 class="font-wedding text-4xl md:text-6xl tracking-[0.1em] drop-shadow-md italic">
                 Código de vestimenta
             </h2>
 
-            <div class="w-40 md:w-56 opacity-90 drop-shadow-lg">
+            <div class="w-40 md:w-56 opacity-90 drop-shadow-lg animate-float">
                 <Image
                         src={iconoPrendas}
                         alt="Traje y Vestido"
@@ -52,8 +52,55 @@ import iconoPrendas from '../assets/trajes.svg'; // Los dibujos de traje y vesti
     </div>
 </section>
 
+<script>
+    const zoomBg = document.querySelector('.zoom-bg') as HTMLElement;
+    const section = document.querySelector('#dress-code-section');
+
+    if (zoomBg && section) {
+        window.addEventListener('scroll', () => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+                const scale = 1 + (progress * 0.1);
+                zoomBg.style.transform = `scale(${scale})`;
+            }
+        }, { passive: true });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    const revealElement = document.querySelector('.scroll-reveal-right');
+    if (revealElement) observer.observe(revealElement);
+</script>
+
 <style>
-    #dress-code-section h2 {
-        font-style: italic;
+    .scroll-reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .scroll-reveal-right.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .animate-float {
+        animation: floating 5s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-12px); }
+    }
+
+    .zoom-bg {
+        transition: transform 0.1s linear;
     }
 </style>

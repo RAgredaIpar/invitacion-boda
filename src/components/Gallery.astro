@@ -23,14 +23,14 @@ import foto9 from '../assets/galeria/foto9.jpg';
     <div class="max-w-[1400px] mx-auto space-y-4">
 
         <div class="flex flex-col md:flex-row gap-4 h-auto md:h-[500px]">
-            <div class="w-full md:w-[60%] h-[300px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[60%] h-[300px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto1}
                         alt="Momento 1"
                         class="w-full h-full object-cover object-[50%_50%]"
                 />
             </div>
-            <div class="w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto2}
                         alt="Momento 2"
@@ -39,7 +39,7 @@ import foto9 from '../assets/galeria/foto9.jpg';
             </div>
         </div>
 
-        <div class="w-full h-[350px] md:h-[600px] overflow-hidden rounded-sm">
+        <div class="gallery-item w-full h-[350px] md:h-[600px] overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
             <Image
                     src={foto3}
                     alt="Momento 3"
@@ -48,21 +48,21 @@ import foto9 from '../assets/galeria/foto9.jpg';
         </div>
 
         <div class="flex flex-col md:flex-row gap-4 h-auto md:h-[450px]">
-            <div class="w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto4}
                         alt="Momento 4"
                         class="w-full h-full object-cover object-[50%_50%]"
                 />
             </div>
-            <div class="w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto5}
                         alt="Momento 5"
                         class="w-full h-full object-cover object-[50%_50%]"
                 />
             </div>
-            <div class="w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto6}
                         alt="Momento 6"
@@ -72,21 +72,21 @@ import foto9 from '../assets/galeria/foto9.jpg';
         </div>
 
         <div class="flex flex-col md:flex-row gap-4 h-auto md:h-[450px]">
-            <div class="w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto7}
                         alt="Momento 7"
                         class="w-full h-full object-cover object-[50%_50%]"
                 />
             </div>
-            <div class="w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[30%] h-[250px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto8}
                         alt="Momento 8"
                         class="w-full h-full object-cover object-[50%_50%]"
                 />
             </div>
-            <div class="w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm">
+            <div class="gallery-item w-full md:w-[40%] h-[300px] md:h-full overflow-hidden rounded-sm opacity-0 translate-y-10 transition-all duration-1000">
                 <Image
                         src={foto9}
                         alt="Momento 9"
@@ -97,6 +97,29 @@ import foto9 from '../assets/galeria/foto9.jpg';
 
     </div>
 </section>
+
+<script>
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target as HTMLElement;
+                target.style.opacity = "1";
+                target.style.transform = "translateY(0)";
+                target.style.filter = "blur(0)";
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    });
+
+    galleryItems.forEach(item => {
+        (item as HTMLElement).style.filter = "blur(10px)";
+        observer.observe(item);
+    });
+</script>
 
 <style>
     img {

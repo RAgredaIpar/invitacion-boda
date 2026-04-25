@@ -11,45 +11,82 @@ import ampersand from '../assets/simbolo-ampersand.svg';
             alt="Jorge y Emma abrazados"
             width={2560}
             height={1707}
-            class="absolute inset-0 w-full h-full object-cover object-center z-0"
+            class="absolute inset-0 w-full h-full object-cover object-center z-0 animate-ken-burns"
             loading="eager"
             decoding="async"
     />
 
-    <div class="absolute inset-0 bg-black/10 z-10"></div>
+    <div class="absolute inset-0 bg-black/20 z-10"></div>
 
     <main class="relative z-20 text-center text-white px-4">
-        <section class="animate-fade-in-up">
-            <span class="font-body text-base md:text-2xl tracking-[0.2em] uppercase text-[#eeede7] block mb-6 md:mb-10">
+        <section class="flex flex-col items-center">
+
+            <span class="reveal-item font-body text-base md:text-2xl tracking-[0.2em] uppercase text-[#eeede7] block mb-6 md:mb-10 opacity-0">
                 Nuestra boda
             </span>
 
             <div class="flex items-center justify-center gap-4 md:gap-8 mb-6 md:mb-10">
 
-                <h1 class="font-wedding text-4xl sm:text-5xl md:text-7xl font-light leading-none uppercase tracking-widest">
+                <h1 class="reveal-item font-wedding text-4xl sm:text-5xl md:text-7xl font-light leading-none uppercase tracking-widest opacity-0">
                     Jorge
                 </h1>
 
-                <Image
-                        src={ampersand}
-                        alt="&"
-                        class="w-15 h-15 md:w-35 md:h-35 object-contain"
-                />
+                <div class="reveal-item opacity-0">
+                    <Image
+                            src={ampersand}
+                            alt="&"
+                            class="w-15 h-15 md:w-35 md:h-35 object-contain animate-pulse-slow"
+                    />
+                </div>
 
-                <h1 class="font-wedding text-4xl sm:text-5xl md:text-7xl font-light leading-none uppercase tracking-widest">
+                <h1 class="reveal-item font-wedding text-4xl sm:text-5xl md:text-7xl font-light leading-none uppercase tracking-widest opacity-0">
                     EMMA
                 </h1>
             </div>
 
-            <div class="flex items-center justify-center gap-4 text-[#eeede7]">
-                <p class="font-body text-xl md:text-4xl">
+            <div class="reveal-item opacity-0 flex flex-col items-center gap-4 text-[#eeede7]">
+                <p class="font-body text-xl md:text-4xl tracking-widest">
                     12 | SEP | 2026
                 </p>
+                <div class="w-12 h-[1px] bg-white/50 animate-width-grow"></div>
             </div>
 
         </section>
     </main>
 </div>
+
+<script>
+    function revealWelcome() {
+        const items = document.querySelectorAll('.reveal-item');
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                (item as HTMLElement).style.opacity = "1";
+                (item as HTMLElement).style.transform = "translateY(0)";
+                (item as HTMLElement).style.filter = "blur(0)";
+                item.classList.add('animate-welcome-reveal');
+            }, 200 * index);
+        });
+    }
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (document.body.classList.contains('preloader-done')) {
+                    revealWelcome();
+                    observer.disconnect();
+                }
+            }
+        });
+    });
+
+    observer.observe(document.body, { attributes: true });
+
+    setTimeout(() => {
+        if (!document.body.classList.contains('preloader-done')) {
+            revealWelcome();
+        }
+    }, 4000);
+</script>
 
 <style>
     #container {
@@ -57,18 +94,55 @@ import ampersand from '../assets/simbolo-ampersand.svg';
         height: 100dvh;
     }
 
-    .animate-fade-in-up {
-        animation: fadeInUp 2s ease-out forwards;
+    .animate-ken-burns {
+        animation: kenburns 20s ease-in-out infinite alternate;
     }
 
-    @keyframes fadeInUp {
+    @keyframes kenburns {
+        from { transform: scale(1); }
+        to { transform: scale(1.15); }
+    }
+
+    .animate-welcome-reveal {
+        animation: welcomeReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes welcomeReveal {
         from {
             opacity: 0;
-            transform: translateY(30px) scale(0.98);
+            transform: translateY(20px);
+            filter: blur(10px);
         }
         to {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
+            filter: blur(0);
         }
+    }
+
+    .animate-pulse-slow {
+        animation: pulseSlow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulseSlow {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .animate-width-grow {
+        animation: widthGrow 2s ease-out forwards;
+        animation-delay: 1.5s;
+    }
+
+    @keyframes widthGrow {
+        from { width: 0; }
+        to { width: 60px; }
+    }
+
+    .reveal-item {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(10px);
+        transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
 </style>

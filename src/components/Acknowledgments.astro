@@ -13,7 +13,7 @@ import fondoAgradecimiento from '../assets/fondo-detalles.jpeg';
 
     <div class="relative z-20 w-full flex flex-col items-center">
 
-        <div class="text-center text-[#2c2616] mb-12 drop-shadow-lg italic">
+        <div class="reveal-verse text-center text-[#2c2616] mb-12 drop-shadow-lg italic opacity-0 filter blur-lg transition-all duration-[1500ms] ease-out">
             <h3 class="font-body text-3xl md:text-5xl tracking-[0.3em] uppercase mb-4">
                 ¡ESPERAMOS PODER VERTE AHÍ!
             </h3>
@@ -27,7 +27,7 @@ import fondoAgradecimiento from '../assets/fondo-detalles.jpeg';
             </div>
         </div>
 
-        <div class="w-full max-w-4xl bg-[#f6f0e4] p-10 md:p-16 rounded-3xl rounded-tr-[100px] shadow-2xl text-center border border-[#2c2616]/10 mx-auto">
+        <div class="reveal-final-card w-full max-w-4xl bg-[#f6f0e4] p-10 md:p-16 rounded-3xl rounded-tr-[100px] shadow-2xl text-center border border-[#2c2616]/10 mx-auto opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-300">
 
             <h4 class="font-body text-4xl md:text-5xl text-[#2c2616] mb-10 italic">
                 Confirma tu asistencia
@@ -37,10 +37,38 @@ import fondoAgradecimiento from '../assets/fondo-detalles.jpeg';
                 ¡La cuenta regresiva ha comenzado! Nuestro equipo de wedding planners se comunicará contigo en los próximos días para confirmar tu asistencia, ¡nos vemos en nuestra boda!
             </p>
 
-            <div class="w-24 md:w-120 h-[2px] bg-black/40 mx-auto"></div>
+            <div class="drawing-line w-0 h-[2px] bg-black/40 mx-auto transition-all duration-[3000ms] ease-in-out delay-700"></div>
         </div>
     </div>
 </section>
+
+<script>
+    const ackObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target as HTMLElement;
+
+                if (target.classList.contains('reveal-verse')) {
+                    target.style.opacity = "1";
+                    target.style.filter = "blur(0)";
+                }
+
+                if (target.classList.contains('reveal-final-card')) {
+                    target.style.opacity = "1";
+                    target.style.transform = "translateY(0)";
+
+                    const line = target.querySelector('.drawing-line') as HTMLElement;
+                    if (line) {
+                        const finalWidth = window.innerWidth < 768 ? '96px' : '480px';
+                        line.style.width = finalWidth;
+                    }
+                }
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.reveal-verse, .reveal-final-card').forEach(el => ackObserver.observe(el));
+</script>
 
 <style>
     #agradecimiento {
