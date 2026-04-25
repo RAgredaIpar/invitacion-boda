@@ -4,7 +4,6 @@ import fondoPapel from '../assets/fondo-papel-2.jpg';
 import florIzquierda from '../assets/plantas.png';
 import florDerecha from '../assets/plantas.png';
 
-
 import fondoSeccionInferior from '../assets/fondo-detalles.jpeg';
 import selloBoda from '../assets/sello-boda.png';
 ---
@@ -19,12 +18,12 @@ import selloBoda from '../assets/sello-boda.png';
     <div class="absolute inset-0 bg-[#f3ede2]/50 z-10 pointer-events-none"></div>
 
     <div class="absolute z-30 pointer-events-none
-                -left-12 top-10 scale-[0.5] md:scale-120 md:-top-8 rotate-75">
+                -left-12 -top-20 scale-[0.5] lg:scale-120 lg:-top-8 rotate-75">
         <Image src={florIzquierda} alt="" class="w-auto h-[350px] md:h-[500px] object-contain" />
     </div>
 
     <div class="absolute z-30 pointer-events-none
-                -right-15 top-40 scale-[0.6] md:scale-130 md:-right-10 md:top-10 -rotate-50">
+                -right-15 top-20 scale-[0.6] lg:scale-130 lg:-right-10 lg:top-10 -rotate-50">
         <Image src={florDerecha} alt="" class="w-auto h-[350px] md:h-[500px] object-contain" />
     </div>
 
@@ -45,7 +44,7 @@ import selloBoda from '../assets/sello-boda.png';
                 </div>
             </div>
 
-            <div class="absolute left-1/2 -bottom-20 md:-bottom-105 -translate-x-1/2 z-40 w-32 h-32 md:w-150 md:h-150 pointer-events-none">
+            <div class="absolute left-1/2 -bottom-45 lg:-bottom-80 xl:-bottom-105 -translate-x-1/2 z-40 w-50 h-50 lg:w-100 lg:h-100 xl:w-150 xl:h-150 pointer-events-none">
                 <Image
                         src={selloBoda}
                         alt="Sello personalizado"
@@ -72,17 +71,17 @@ import selloBoda from '../assets/sello-boda.png';
                 12 | SEPTIEMBRE | 2026
             </p>
 
-            <h4 class="font-wedding text-4xl md:text-5xl tracking-[0.2em] text-[#2c2616] mb-8 leading-none">
+            <h4 class="font-wedding italic text-4xl md:text-5xl tracking-[0.2em] text-[#2c2616] mb-8 leading-none">
                 Ceremonia y Recepción
             </h4>
 
-            <div class="flex items-center justify-center gap-10 md:gap-16 font-wedding text-[#2c2616]/80 text-base md:text-3xl tracking-[0.1em] italic mb-10">
+            <div class="flex items-center justify-center gap-10 md:gap-16 font-wedding text-[#c5b4a0] text-base md:text-3xl tracking-[0.1em] italic mb-10">
                 <p>5:00 pm</p>
                 <p>6:30 pm</p>
             </div>
 
             <div class="space-y-3 font-body text-[#2c2616] tracking-[0.2em] uppercase leading-relaxed mb-12">
-                <p class="text-xl md:text-2xl font-light">Quinta Mónaco</p>
+                <p class="text-xl md:text-3xl">Quinta Mónaco</p>
                 <p class="text-[10px] md:text-base opacity-70">
                     C. 33 912, Chichí Suárez,<br />
                     97306 Mérida, Yuc.
