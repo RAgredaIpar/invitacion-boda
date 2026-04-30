@@ -4,6 +4,7 @@ import '@fontsource/cormorant';
 import '../styles/global.css';
 import Preloader from '../components/Preloader.astro';
 import MagneticMouse from "../components/MagneticMouse.astro";
+import MusicPlayer from "../components/MusicPlayer.astro";
 ---
 
 <!doctype html>
@@ -15,7 +16,9 @@ import MagneticMouse from "../components/MagneticMouse.astro";
 </head>
 <body class="bg-[#f6f0e4]">
 <Preloader />
-<MagneticMouse /> <slot />
+<MagneticMouse />
+<MusicPlayer />
+<slot />
 </body>
 </html>
 
