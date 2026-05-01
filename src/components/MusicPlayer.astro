@@ -2,10 +2,11 @@
 ---
 <div id="music-player-root" class="fixed bottom-6 right-6 z-[50] flex flex-col items-center gap-3 opacity-0 transition-all duration-1000 group">
 
-    <!-- Contenedor del Slider: Corregido con dimensiones fijas -->
+    <!-- Contenedor del Slider -->
     <div id="volume-control" class="flex flex-col items-center justify-center bg-[#f6f0e4]/90 backdrop-blur-md border border-[#2c2616]/20 w-12 h-40 rounded-full shadow-2xl opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-500 ease-out">
 
         <div class="relative w-full h-32 flex items-center justify-center">
+            <!-- touch-none es la clave para móviles -->
             <input
                     type="range"
                     id="volume-slider"
@@ -13,7 +14,7 @@
                     max="1"
                     step="0.01"
                     value="0.5"
-                    class="absolute accent-[#2c2616] cursor-pointer w-28 -rotate-90 appearance-none bg-transparent"
+                    class="absolute accent-[#2c2616] cursor-pointer w-28 -rotate-90 appearance-none bg-transparent touch-none"
             />
         </div>
 
@@ -50,7 +51,7 @@
     audio.volume = 0.5;
 
     const updateVisuals = (muted: boolean) => {
-        if (muted) {
+        if (muted || audio.volume === 0) {
             slash?.classList.add('scale-x-100');
             slash?.classList.remove('scale-x-0');
             bars.forEach(bar => (bar as HTMLElement).style.animationPlayState = 'paused');
@@ -61,7 +62,18 @@
         }
     };
 
-    btn?.addEventListener('click', () => {
+    // Función para intentar reproducir (Manejo de Autoplay móvil)
+    const playAudio = () => {
+        audio.play().then(() => {
+            updateVisuals(false);
+            // Si suena, quitamos los listeners de "primer toque"
+            window.removeEventListener('touchstart', playAudio);
+            window.removeEventListener('click', playAudio);
+        }).catch(err => console.log("Esperando interacción..."));
+    };
+
+    btn?.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita conflictos
         audio.muted = !audio.muted;
         updateVisuals(audio.muted);
     });
@@ -69,18 +81,25 @@
     slider?.addEventListener('input', (e) => {
         const val = parseFloat((e.target as HTMLInputElement).value);
         audio.volume = val;
-        if (val === 0) {
-            updateVisuals(true);
-        } else {
-            if (audio.muted) audio.muted = false;
-            updateVisuals(false);
-        }
+        updateVisuals(audio.muted);
     });
+
+    // Evitar que el input propague el scroll en móviles
+    slider?.addEventListener('touchmove', (e) => {
+        e.stopPropagation();
+    }, { passive: false });
 
     const observer = new MutationObserver(() => {
         if (document.body.classList.contains('preloader-done')) {
             if (root) root.style.opacity = "1";
-            audio.play().then(() => updateVisuals(false)).catch(() => updateVisuals(true));
+
+            // Intentamos sonar de una vez
+            playAudio();
+
+            // Si el Autoplay bloquea, sonará al primer toque en la pantalla
+            window.addEventListener('touchstart', playAudio, { once: true });
+            window.addEventListener('click', playAudio, { once: true });
+
             observer.disconnect();
         }
     });
@@ -103,8 +122,11 @@
         100% { height: 16px; }
     }
 
+    /* CRÍTICO: Evitar scroll mientras se toca el slider */
+    .touch-none {
+        touch-action: none;
+    }
 
-    /* Estilización del Slider para que no se vea estirado */
     #volume-slider::-webkit-slider-runnable-track {
         width: 100%;
         height: 4px;
@@ -114,11 +136,11 @@
 
     #volume-slider::-webkit-slider-thumb {
         appearance: none;
-        width: 12px;
-        height: 12px;
+        width: 18px; /* Un poco más grande para facilitar el toque en móvil */
+        height: 18px;
         background: #2c2616;
         border-radius: 50%;
-        margin-top: -4px; /* Centra el thumb en el track */
+        margin-top: -7px;
         cursor: pointer;
         border: none;
     }
@@ -131,8 +153,8 @@
     }
 
     #volume-slider::-moz-range-thumb {
-        width: 12px;
-        height: 12px;
+        width: 18px;
+        height: 18px;
         background: #2c2616;
         border-radius: 50%;
         cursor: pointer;
