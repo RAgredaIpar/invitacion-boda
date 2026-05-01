@@ -62,44 +62,49 @@
         }
     };
 
-    // Función para intentar reproducir (Manejo de Autoplay móvil)
     const playAudio = () => {
         audio.play().then(() => {
-            updateVisuals(false);
-            // Si suena, quitamos los listeners de "primer toque"
+            updateVisuals(audio.muted);
             window.removeEventListener('touchstart', playAudio);
             window.removeEventListener('click', playAudio);
-        }).catch(err => console.log("Esperando interacción..."));
+        }).catch(() => {});
     };
 
+    // CLIC SIMPLE: Mutear/Desmutear (Funciona igual en PC y Celular)
     btn?.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita conflictos
+        e.stopPropagation();
         audio.muted = !audio.muted;
         updateVisuals(audio.muted);
     });
 
+    // CONTROL DE VOLUMEN (Principalmente para PC vía Hover)
     slider?.addEventListener('input', (e) => {
         const val = parseFloat((e.target as HTMLInputElement).value);
         audio.volume = val;
         updateVisuals(audio.muted);
     });
 
-    // Evitar que el input propague el scroll en móviles
-    slider?.addEventListener('touchmove', (e) => {
-        e.stopPropagation();
-    }, { passive: false });
+    // DETENER SI SE MINIMIZA O CAMBIA DE PESTAÑA
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            audio.pause();
+        } else {
+            // Solo retomar si no estaba muteado manualmente antes
+            if (!audio.muted && audio.volume > 0) {
+                audio.play().catch(() => {});
+            }
+        }
+    });
+
+    // SOPORTE PARA SCROLL EN SLIDER (PC)
+    slider?.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
 
     const observer = new MutationObserver(() => {
         if (document.body.classList.contains('preloader-done')) {
             if (root) root.style.opacity = "1";
-
-            // Intentamos sonar de una vez
             playAudio();
-
-            // Si el Autoplay bloquea, sonará al primer toque en la pantalla
             window.addEventListener('touchstart', playAudio, { once: true });
             window.addEventListener('click', playAudio, { once: true });
-
             observer.disconnect();
         }
     });
