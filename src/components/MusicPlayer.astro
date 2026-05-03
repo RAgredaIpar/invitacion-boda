@@ -2,12 +2,10 @@
 ---
 <div id="music-player-root" class="fixed bottom-6 right-6 z-[50] flex flex-col items-center gap-3 opacity-0 transition-all duration-1000 group">
 
-    <!-- Contenedor del Slider -->
     <div id="volume-control" class="flex flex-col items-center justify-center bg-[#f6f0e4]/90 backdrop-blur-md border border-[#2c2616]/20 w-12 h-40 rounded-full shadow-2xl opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-500 ease-out">
 
         <div class="relative w-full h-32 flex items-center justify-center">
-            <!-- touch-none es la clave para móviles -->
-            <input
+            <label for="volume-slider"></label><input
                     type="range"
                     id="volume-slider"
                     min="0"
@@ -21,7 +19,6 @@
         <span class="text-[9px] font-body text-[#2c2616] mb-4 uppercase tracking-widest font-bold opacity-60">Vol</span>
     </div>
 
-    <!-- Botón Principal -->
     <button
             id="music-btn"
             class="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#2c2616]/10 backdrop-blur-md border border-[#2c2616]/20 rounded-full hover:bg-[#2c2616]/20 transition-all duration-300 shadow-xl active:scale-90"
@@ -70,33 +67,28 @@
         }).catch(() => {});
     };
 
-    // CLIC SIMPLE: Mutear/Desmutear (Funciona igual en PC y Celular)
     btn?.addEventListener('click', (e) => {
         e.stopPropagation();
         audio.muted = !audio.muted;
         updateVisuals(audio.muted);
     });
 
-    // CONTROL DE VOLUMEN (Principalmente para PC vía Hover)
     slider?.addEventListener('input', (e) => {
         const val = parseFloat((e.target as HTMLInputElement).value);
         audio.volume = val;
         updateVisuals(audio.muted);
     });
 
-    // DETENER SI SE MINIMIZA O CAMBIA DE PESTAÑA
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             audio.pause();
         } else {
-            // Solo retomar si no estaba muteado manualmente antes
             if (!audio.muted && audio.volume > 0) {
                 audio.play().catch(() => {});
             }
         }
     });
 
-    // SOPORTE PARA SCROLL EN SLIDER (PC)
     slider?.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
 
     const observer = new MutationObserver(() => {
@@ -127,7 +119,6 @@
         100% { height: 16px; }
     }
 
-    /* CRÍTICO: Evitar scroll mientras se toca el slider */
     .touch-none {
         touch-action: none;
     }
@@ -141,7 +132,7 @@
 
     #volume-slider::-webkit-slider-thumb {
         appearance: none;
-        width: 18px; /* Un poco más grande para facilitar el toque en móvil */
+        width: 18px;
         height: 18px;
         background: #2c2616;
         border-radius: 50%;
